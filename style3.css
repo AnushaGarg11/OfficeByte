@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
+
+body {
+    background: #121212;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    width: 90%;
+    max-width: 900px;
+    margin: auto;
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #1e1e1e;
+    box-shadow: 0 0 10px rgba(0, 255, 204, 0.2);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+}
+
+th {
+    background: #00ffcc;
+    color: #121212;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background: #2a2a2a;
+}
+
+tr:hover {
+    background: rgba(0, 255, 204, 0.2);
+}
+
+.paid {
+    color: #00ffcc;
+    font-weight: bold;
+}
+
+.pending {
+    color: #ff4c4c;
+    font-weight: bold;
+}
+
+.reminder-btn {
+    background: #ff4c4c;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.reminder-btn:hover {
+    background: #ff0000;
+}

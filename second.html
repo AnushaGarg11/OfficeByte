@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Model Viewer</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background: #121212;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .sketchfab-embed-wrapper {
+            width: 90vw;
+            height: 80vh;
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+        }
+        .sketchfab-embed-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .details-button {
+            margin-top: 20px;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #121212;
+            background: #00ffcc;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.8);
+            transition: background 0.3s, transform 0.2s;
+        }
+        .details-button:hover {
+            background: #00cca3;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="sketchfab-embed-wrapper">
+        <iframe title="Office building" frameborder="0" allowfullscreen 
+        mozallowfullscreen="true" webkitallowfullscreen="true" 
+        allow="autoplay; fullscreen; xr-spatial-tracking" 
+        xr-spatial-tracking execution-while-out-of-viewport 
+        execution-while-not-rendered web-share 
+        src="https://sketchfab.com/models/af9782245c134c21ae0c8df7f57077e6/embed?ui_infos=0&ui_controls=1&ui_stop=0&ui_watermark=0&ui_watermark_link=0">
+        </iframe>
+    </div>
+    <a href="./property2.html" class="details-button">Click Here for Property Details</a>
+</body>
+</html>

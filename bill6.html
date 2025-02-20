@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generated Bills</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <style>
+        body {
+            background-color: #121212;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        table {
+            width: 80%;
+            margin: auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid white;
+            padding: 10px;
+            text-align: center;
+        }
+        button {
+            margin-top: 10px;
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h2>Electricity Bills</h2>
+    <div id="billDisplay"></div>
+
+    <script>
+        const { jsPDF } = window.jspdf;
+
+        let previousReadings = JSON.parse(localStorage.getItem("previousReadings")) || [150, 200, 180, 250, 300, 270, 220, 290, 310, 190];
+        let currentReadings = JSON.parse(localStorage.getItem("currentReadings")) || [180, 230, 210, 280, 330, 300, 250, 320, 340, 220];
+        let customers = JSON.parse(localStorage.getItem("customers")) || [
+            { name: "John Doe", phone: "9876543210", email: "hersheycloud0@gmail.com" },
+            { name: "Jane Smith", phone: "9823456789", email: "jane@example.com" },
+            { name: "Michael Brown", phone: "9812345678", email: "michael@example.com" },
+            { name: "Emma Wilson", phone: "9809876543", email: "emma@example.com" },
+            { name: "Chris Evans", phone: "9898989898", email: "chris@example.com" },
+            { name: "Olivia Taylor", phone: "9786543210", email: "olivia@example.com" },
+            { name: "David Johnson", phone: "9754321098", email: "david@example.com" },
+            { name: "Sophia Davis", phone: "9723456789", email: "sophia@example.com" },
+            { name: "James Anderson", phone: "9698765432", email: "james@example.com" },
+            { name: "Emily Thomas", phone: "9678901234", email: "emily@example.com" }
+        ];
+        let bills = [];
+
+        function generateBills() {
+            let billHTML = `<table>
+                <tr>
+                    <th>Cabin No.</th>
+                    <th>Customer Name</th>
+                    <th>Phone Number</th>
+                    <th>Email</th>
+                    <th>Consumption</th>
+                    <th>Bill Amount (₹)</th>
+                    <th>Action</th>
+                </tr>`;
+
+            for (let i = 0; i < 10; i++) {
+                let consumption = currentReadings[i] - previousReadings[i];
+                let billAmount = consumption * 18;
+
+                bills.push({
+                    cabin: i + 1,
+                    name: customers[i].name,
+                    phone: customers[i].phone,
+                    email: customers[i].email,
+                    consumption,
+                    billAmount
+                });
+
+                billHTML += `<tr>
+                    <td>Cabin ${i + 1}</td>
+                    <td>${customers[i].name}</td>
+                    <td>${customers[i].phone}</td>
+                    <td>${customers[i].email}</td>
+                    <td>${consumption} units</td>
+                    <td>₹${billAmount}</td>
+                    <td>
+                        <button onclick="generatePDF(${i})">Download PDF</button>
+                        <button onclick="sendBill('${customers[i].name}', '${customers[i].email}', ${i})">Send Email</button>
+                    </td>
+                </tr>`;
+            }
+
+            
+            document.getElementById("billDisplay").innerHTML = billHTML;
+        }
+
+        function generatePDF(index) {
+            let bill = bills[index];
+            const doc = new jsPDF();
+            doc.setFontSize(16);
+            doc.text("Office Electricity Bill", 60, 20);
+            doc.setFontSize(12);
+
+            let y = 40;
+            doc.text(`Cabin Number: ${bill.cabin}`, 20, y);
+            doc.text(`Customer Name: ${bill.name}`, 20, y + 10);
+            doc.text(`Phone: ${bill.phone}`, 20, y + 20);
+            doc.text(`Email: ${bill.email}`, 20, y + 30);
+            doc.text(`Consumption: ${bill.consumption} units`, 20, y + 40);
+            doc.text(`Bill Amount: ₹${bill.billAmount}`, 20, y + 50);
+            doc.text("Authorized Signature: OfficeByte", 20, y + 70);
+
+            doc.save(`Cabin_${bill.cabin}_Bill.pdf`);
+        }
+
+        (function() {
+            emailjs.init("GJ393_MHxrqqc0o8i");  
+        })();
+
+        function sendBill(clientName, clientEmail, index) {
+            let bill = bills[index];
+
+            let templateParams = {
+                to_name: clientName,
+                to_email: clientEmail,
+                cabin_number: bill.cabin,
+                consumption: bill.consumption,
+                bill_amount: bill.billAmount
+            };
+
+            emailjs.send("service_uadgi7s", "template_1papi3m", templateParams)
+            .then(function(response) {
+                alert("✅ Bill email sent to " + clientName);
+                console.log("Email sent successfully:", response);
+            }, function(error) {
+                alert("❌ Failed to send email: " + JSON.stringify(error));
+                console.log("Email sending error:", error);
+            });
+        }
+
+        function sendAllBills() {
+            bills.forEach((bill, index) => {
+                sendBill(bill.name, bill.email, index);
+            });
+            alert("Bills are being sent to all customers!");
+        }
+
+        window.onload = generateBills;
+    </script>
+</body>
+</html>

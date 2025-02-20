@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OfficeByte</title>
+    <link rel="stylesheet" href="style1.css">
+</head>
+<body>
+    <div class="container">
+        <h1 id="officebyte"></h1>
+        <div class="buttons">
+            <a href="./second.html" class="btn">Customer</a>
+            <a href="./owneroptions3.html" class="btn">Owner</a>
+        </div>
+    </div>
+    
+    <script>
+        const text = "OfficeByte";
+        let index = 0;
+        function typeEffect() {
+            if (index < text.length) {
+                document.getElementById("officebyte").innerHTML += text.charAt(index);
+                index++;
+                setTimeout(typeEffect, 200);
+            }
+        }
+        window.onload = typeEffect;
+    </script>
+</body>
+</html>

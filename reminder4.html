@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Management</title>
+    <link rel="stylesheet" href="style3.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Client Management</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Client Name</th>
+                    <th>Email</th>
+                    <th>Cabin No.</th>
+                    <th>Rent (₹)</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>John Doe</td>
+                    <td>hersheycloud0@gmail.com</td>
+                    <td>1</td>
+                    <td>15,000</td>
+                    <td>5th Feb</td>
+                    <td class="pending">Pending</td>
+                    <td><button class="reminder-btn" onclick="sendReminder('John Doe', 'hersheycloud0@gmail.com', 1, 15000, '5th Feb')">Send Reminder</button></td>
+                </tr>
+                <tr>
+                    <td>Jane Smith</td>
+                    <td>jane@example.com</td>
+                    <td>2</td>
+                    <td>18,000</td>
+                    <td>7th Feb</td>
+                    <td class="paid">Paid</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Michael Brown</td>
+                    <td>michael@example.com</td>
+                    <td>3</td>
+                    <td>22,000</td>
+                    <td>10th Feb</td>
+                    <td class="pending">Pending</td>
+                    <td><button class="reminder-btn" onclick="sendReminder('Michael Brown', 'michael@example.com', 3, 22000, '10th Feb')">Send Reminder</button></td>
+                </tr>
+                <tr>
+                    <td>Emma Wilson</td>
+                    <td>emma@example.com</td>
+                    <td>4</td>
+                    <td>17,500</td>
+                    <td>12th Feb</td>
+                    <td class="paid">Paid</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Chris Evans</td>
+                    <td>chris@example.com</td>
+                    <td>5</td>
+                    <td>25,000</td>
+                    <td>15th Feb</td>
+                    <td class="pending">Pending</td>
+                    <td><button class="reminder-btn" onclick="sendReminder('Chris Evans', 'chris@example.com', 5, 25000, '15th Feb')">Send Reminder</button></td>
+                </tr>
+                <tr>
+                    <td>Olivia Taylor</td>
+                    <td>olivia@example.com</td>
+                    <td>6</td>
+                    <td>20,500</td>
+                    <td>18th Feb</td>
+                    <td class="paid">Paid</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>David Johnson</td>
+                    <td>david@example.com</td>
+                    <td>7</td>
+                    <td>28,000</td>
+                    <td>20th Feb</td>
+                    <td class="pending">Pending</td>
+                    <td><button class="reminder-btn" onclick="sendReminder('David Johnson', 'david@example.com', 7, 28000, '20th Feb')">Send Reminder</button></td>
+                </tr>
+                <tr>
+                    <td>Sophia Davis</td>
+                    <td>sophia@example.com</td>
+                    <td>8</td>
+                    <td>24,000</td>
+                    <td>22nd Feb</td>
+                    <td class="paid">Paid</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>James Anderson</td>
+                    <td>james@example.com</td>
+                    <td>9</td>
+                    <td>30,000</td>
+                    <td>25th Feb</td>
+                    <td class="pending">Pending</td>
+                    <td><button class="reminder-btn" onclick="sendReminder('James Anderson', 'james@example.com', 9, 30000, '25th Feb')">Send Reminder</button></td>
+                </tr>
+                <tr>
+                    <td>Emily Thomas</td>
+                    <td>emily@example.com</td>
+                    <td>10</td>
+                    <td>27,000</td>
+                    <td>28th Feb</td>
+                    <td class="pending">Pending</td>
+                    <td><button class="reminder-btn" onclick="sendReminder('Emily Thomas', 'emily@example.com', 10, 27000, '28th Feb')">Send Reminder</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        (function() {
+            emailjs.init("GJ393_MHxrqqc0o8i");  // Replace with your actual EmailJS User ID
+        })();
+
+        function sendReminder(clientName, clientEmail, cabinNumber, rentAmount, dueDate) {
+            let templateParams = {
+                to_name: clientName,
+                to_email: clientEmail,
+                cabin_number: cabinNumber,
+                rent_amount: rentAmount,
+                due_date: dueDate
+            };
+
+            emailjs.send("service_uadgi7s", "template_sk7lwel", templateParams)
+            .then(function(response) {
+                alert("✅ Reminder email sent to " + clientName);
+            }, function(error) {
+                alert("❌ Failed to send email: " + JSON.stringify(error));
+            });
+        }
+    </script>
+</body>
+</html>
